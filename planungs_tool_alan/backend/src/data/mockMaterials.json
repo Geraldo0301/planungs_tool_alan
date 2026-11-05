@@ -1,0 +1,26 @@
+[
+  {
+    "materialHeader": {
+      "materialNummer": "DEMO-001",
+      "bezeichnung": "Demo Material 1",
+      "stueckPreis": 10
+    },
+    "werkeDaten": [
+      {
+        "werk": "3000",
+        "bestandsDaten": {
+          "aktuellerLagerBestand": 20,
+          "sicherheitsBestand": 5
+        },
+        "parameterWiederbeschaffung": {
+          "planLieferzeitTage": 10
+        },
+        "auftraegeVorplan": [
+          {
+            "bedarfMenge": 8
+          }
+        ]
+      }
+    ]
+  }
+]
