@@ -40,6 +40,7 @@ export interface SAPWerkData {
         aktuellerLagerBestand?: number;
         sicherheitsBestand?: number;
         meldeBestand?: number;
+        lagerplaetze?: string | number;
     };
     parameterWiederbeschaffung?: {
         bearbeitungsZeit?: number;
@@ -51,16 +52,17 @@ export interface SAPWerkData {
     einkaufZufluss?: SAPEinkaufZufluss[];
     //Individual goods movements
     bewegungen?: SAPMBewegung[];
+    historieSollIst?: SAPHistorieSollIstItem[]; // <-- HIER HINZUFÜGEN
 }
 
-export interface SAPHistorieSollIstItem{
+export interface SAPHistorieSollIstItem {
     jahr?: number;
     monat?: number;
     sollMenge?: number;
     istMenge?: number;
 }
 
-export interface NachFolgeEingeschaften{
+export interface NachFolgeEingeschaften {
     isReplacement?: boolean;
     vorgaengeMaterial?: string;
     ersetzungGrund?: string;
@@ -86,7 +88,7 @@ export interface SAPMaterialHeader {
     moq?: number;
 }
 
-export interface SAPMaterialData{
+export interface SAPMaterialData {
     materialHeader?: SAPMaterialHeader;
     werkeDaten?: SAPWerkData[];
     otifHistorie?: {
@@ -97,7 +99,7 @@ export interface SAPMaterialData{
 }
 
 //Metrics and calculations related to stock status
-export interface SCMMetrics{
+export interface SCMMetrics {
     werk: string;
     werkBezeichnung: string;
     istHauptWerk: boolean;
@@ -110,7 +112,7 @@ export interface SCMMetrics{
 }
 
 //Metrics and calculations related to goods movements
-export interface MovementMetrics{
+export interface MovementMetrics {
     totalWarenausgangMenge: number; //Total quantity of goods issued
     totalWareneingangMenge: number; //Total quantity of goods received
     letzterWareneingangDatum?: string; //Date of the last goods receipt
@@ -119,10 +121,10 @@ export interface MovementMetrics{
     statusBewegung: "ACTIVE" | "SLOW" | "DEAD" | "NEVER"; //Status of the goods movement
     statusBewegungText: string; //Textual representation of the goods movement status
     //Acumulated obsolescence risk value in Euro (In case inactive/obsolete materials are still in stock)
-    obsoleszenzRisikoWertEuro: number; 
+    obsoleszenzRisikoWertEuro: number;
 }
 
-export interface EnrichedWerkData extends SAPWerkData{
+export interface EnrichedWerkData extends SAPWerkData {
     calculatedMetrics: SCMMetrics;
     movementMetrics?: MovementMetrics;
 }
@@ -161,7 +163,7 @@ export interface ItemMovementsAnalysis {
 }
 
 //Filter state and API response
-export interface FilterState{
+export interface FilterState {
     searchQuery: string;
     werk: string;
     abcKennzeichen: string;
@@ -195,11 +197,11 @@ export interface CombinedStockHealthMtrics {
 
     //Unified Stock Health
     integratedRiskCategory:
-    |"DEAD_AND_NO_DEMAND" //Totes Material
-    |"NO_DEMAND_ACTIVE" //No projected future demand
-    |"INACTIVE_WITH_DEMAND" //Historic inactive (But with future order)
-    |"HEALTHY" //Regular healthy flow
-    |"UNSTOCKED_DEMAND" //Future demand without stock
+    | "DEAD_AND_NO_DEMAND" //Totes Material
+    | "NO_DEMAND_ACTIVE" //No projected future demand
+    | "INACTIVE_WITH_DEMAND" //Historic inactive (But with future order)
+    | "HEALTHY" //Regular healthy flow
+    | "UNSTOCKED_DEMAND" //Future demand without stock
 }
 
 //Extension for the visualization table in React
